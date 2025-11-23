@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mô hình ER cho hệ thống xem phim</title>
+  <!-- Sử dụng phiên bản ES Module của Mermaid từ CDN -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+  <!-- Nếu bạn gặp vấn đề với import module, có thể dùng cách sau (dạng non-module):
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+  -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .mermaid {
+      margin: 0 auto;
+      max-width: 1000px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mô hình ER cho hệ thống xem phim</h1>
+  <div class="mermaid">
+erDiagram
+    USER {
+        int id PK
+        string full_name
+        string email
+        string password
+        enum role
+        datetime created_at
+        datetime updated_at
+    }
+    
+    MOVIE {
+        int id PK
+        string title
+        decimal rating
+        int views
+        string genre
+        string summary
+        int duration
+        int total_episodes
+        int release_year
+        string poster_url
+        string trailer_url
+        datetime created_at
+        datetime updated_at
+    }
+    
+    EPISODE {
+        int id PK
+        int movie_id FK
+        int episode_number
+        string video_url
+        datetime created_at
+        datetime updated_at
+    }
+    
+    MOVIE_COMMENT {
+        int id PK
+        int movie_id FK
+        int user_id FK
+        string comment
+        datetime created_at
+    }
+    
+    USER_WATCH_HISTORY {
+        int id PK
+        int user_id FK
+        int movie_id FK
+        datetime watched_at
+    }
+    
+    USER_FAVORITES {
+        int id PK
+        int user_id FK
+        int movie_id FK
+        datetime favorited_at
+    }
+
+    %% Các mối quan hệ giữa các bảng:
+    USER ||--o{ MOVIE_COMMENT : "writes"
+    MOVIE ||--o{ MOVIE_COMMENT : "receives"
+    MOVIE ||--o{ EPISODE : "contains"
+    USER ||--o{ USER_WATCH_HISTORY : "watches"
+    MOVIE ||--o{ USER_WATCH_HISTORY : "watched in"
+    USER ||--o{ USER_FAVORITES : "favorites"
+    MOVIE ||--o{ USER_FAVORITES : "favorited by"
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+version: '3'
+services:
+  backend:
+    build: .
+    container_name: backend_app
+    ports:
+      - "5000:5000"
+    environment:
+      # Biến môi trường cho kết nối DB
+      - PORT=5000
+      - JWT_SECRET=supersecretkey
+      # Cấu hình kết nối đến AWS RDS
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=duyhung09
+      - DB_HOST=movie-db.co1u04gkcopk.us-east-1.rds.amazonaws.com
+      - DB_PORT=5432
+      # AWS S3 và CloudFront config
+      - AWS_ACCESS_KEY_ID=AKIAZ24ITD5J7UXU357O
+      - AWS_SECRET_ACCESS_KEY=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
+      - AWS_REGION=us-east-1
+      - AWS_S3_BUCKET=aws-movie-web
+      - AWS_CLOUDFRONT_DOMAIN=d16adtc7lj4syo.cloudfront.net
+    # Đã loại bỏ phần phụ thuộc vào database local
+    # depends_on:
+    #   - database
+
+# Đã loại bỏ service database và volumes vì sẽ sử dụng RDS
+# database:
+#   image: postgres:14
+#   container_name: backend_db
+#   restart: always
+#   ports:
+#     - "5432:5432"
+#   environment:
+#   - POSTGRES_USER=postgres
+#   - POSTGRES_PASSWORD=duyhung09
+#   - POSTGRES_DB=movie_db
+#   volumes:
+#     - dbdata:/var/lib/postgresql/data
+
+# volumes:
+#   dbdata:

@@ -1,0 +1,13 @@
+// .sequelizerc.js
+// Dòng này sẽ require ts-node để cho phép chạy file TypeScript (migration, model, …)
+require('ts-node/register');
+
+const path = require('path');
+
+module.exports = {
+  // Trỏ đến file config.json của bạn (nếu config.json nằm ở src/config)
+  config: path.resolve(__dirname, "src", "config", "config.json"),
+  "models-path": path.resolve(__dirname, "src", "models"),
+  "migrations-path": path.resolve(__dirname, "src", "migrations"),
+  "seeders-path": path.resolve(__dirname, "src", "seeders")
+};
